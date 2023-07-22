@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.navbar .navbar-nav {
+  margin-left: auto;
+}
+
+.brand-logo a h2 {
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  line-height: 1.42;
+}
+
+.main-menu { display: flex; }
+
+.main-menu .nav-item {
+  padding: 18px;
+  font-size: 15px;
+  line-height: 26px;
+  cursor: pointer;
+  text-transform: lowercase;
+}

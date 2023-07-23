@@ -1,10 +1,83 @@
+const theme = 'theme';
+const dataTheme = 'data-theme';
+const themeTab = '.theme-tab';
+const switcherBtn = '.switcher-btn';
+const dark = 'dark';
+const light = 'light';
+const open = 'open';
+const active = 'active';
+
 const modalOpen = '[data-open]';
 const modalClose = '[data-close]';
 const isVisible = 'is-visible';
 
+// Accesses the root of the HTML page.
+const root = document.documentElement;
+
+/* Theme */
+const toggleTheme = document.querySelector(themeTab);
+const switcher = document.querySelectorAll(switcherBtn);
+// Stores the current theme locally sot he computer remembers for the
+// next time the user opens the website.
+const currentTheme = localStorage.getItem(theme);
+
+
+/* Modal */
 // 'document.' is a way to query the HTML document.
 const openModal = document.querySelectorAll(modalOpen);
 const closeModal = document.querySelectorAll(modalClose);
+
+// Switches which theme switcher button is active.
+const setActive = (elm, selector) => {
+  if (document.querySelector(`${selector}.${active}`) !== null) {
+    document.querySelector(`${selector}.${active}`).classList.remove(active);
+  }
+  elm.classList.add(active);
+};
+
+const setTheme = (val) => {
+  if (val === dark) {
+    // Adds the data attribute: data-theme='dark'
+    root.setAttribute(dataTheme, dark);
+    localStorage.setItem(theme, dark);
+  } else {
+    root.setAttribute(dataTheme, light);
+    localStorage.setItem(theme, light);
+  }
+};
+
+// Checks the current theme when the page loads and puts the 'active'
+// class on the appropriate theme button.
+if (currentTheme) {
+  root.setAttribute(dataTheme, currentTheme);
+  switcher.forEach((btn) => {
+    btn.classList.remove(active);
+  });
+
+  if (currentTheme === dark) {
+    switcher[1].classList.add(active);
+  } else {
+    switcher[0].classList.add(active);
+  }
+}
+
+toggleTheme.addEventListener('click', function() {
+  const tab = this.parentElement.parentElement;
+  if (!tab.className.includes(open)) {
+    tab.classList.add(open);
+  } else {
+    tab.classList.remove(open);
+  }
+});
+
+// Theme switcher buttons
+for (const elm of switcher) {
+  elm.addEventListener('click', function() {
+    const toggle = this.dataset.toggle;
+    setActive(elm, switcherBtn);
+    setTheme(toggle);
+  });
+}
 
 // Full Site Modal "open buttons"
 for (const elm of openModal) {
@@ -15,12 +88,12 @@ for (const elm of openModal) {
 
     // The data attributes on the list items in the navbar match the id of the associated modals.
     document.getElementById(modalId).classList.add(isVisible);
-  })
+  });
 }
 
 for (const elm of closeModal) {
   elm.addEventListener('click', function() {
     // '.parentElement' grabs the parent element of the element in question.
     this.parentElement.parentElement.classList.remove(isVisible);
-  })
+  });
 }

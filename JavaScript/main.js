@@ -11,6 +11,9 @@ const modalOpen = '[data-open]';
 const modalClose = '[data-close]';
 const isVisible = 'is-visible';
 
+const dataFilter = '[data-filter]';
+const portfolioData = '[data-item]';
+
 // Accesses the root of the HTML page.
 const root = document.documentElement;
 
@@ -21,6 +24,9 @@ const switcher = document.querySelectorAll(switcherBtn);
 // next time the user opens the website.
 const currentTheme = localStorage.getItem(theme);
 
+/* Portfolio */
+const filterLink = document.querySelectorAll(dataFilter);
+const portfolioItems = document.querySelectorAll(portfolioData);
 
 /* Modal */
 // 'document.' is a way to query the HTML document.
@@ -76,6 +82,27 @@ for (const elm of switcher) {
     const toggle = this.dataset.toggle;
     setActive(elm, switcherBtn);
     setTheme(toggle);
+  });
+}
+
+// Adds the 'active' class to the portfolio filter headings when clicked
+// and displays the appropriate cards.
+for (const link of filterLink) {
+  link.addEventListener('click', function() {
+    setActive(link, '.filter-link')
+    // 'this' refers to 'link'.
+    const filter = this.dataset.filter;
+    portfolioItems.forEach((card) => {
+      if (filter === 'all') {
+        card.style.display = 'block';
+      } else if (card.dataset.item === filter) {
+        // This adds the 'display: block' attribute to the card if the
+        // data attribute matches the filtered attribute.
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
   });
 }
 

@@ -307,7 +307,7 @@ size that was previously set on the original card-popup-box class. */
   opacity: 1;
 }
 
-.review-item.previous {
+.review-item.prev {
   transform: translateX(-75%);
   opacity: 0.25;
 }

@@ -5,22 +5,29 @@ let current = Math.floor(Math.random() * slides.length);
 let next = current < slides.length - 1 ? current + 1 : 0;
 let prev = current > 0 ? current - 1 : slides.length - 1;
 
-const dummySlides = [
-  // slide 0
-  // slide 1
-  // slide 2 - current [next] = current + 1
-  // slide 3 - next
-];
+// Updates the classes on each card so the correct CSS is applied.
+const update = () => {
+  slides.forEach((slide) =>{
+    slide.classList.remove('active', 'prev', 'next');
+  })
+  slides[prev].classList.add('prev');
+  slides[current].classList.add('active');
+  slides[next].classList.add('next');
+}
 
-/* create eventListener for prev/next buttons */
-// goToNext()
-// goToPrev()
-// updateIndexes(param)
-// updateCSS()
+// Assigns the new 'current', 'prev', and 'next' values.
+const goToNum = (number) => {
+  current = number;
+  next = current < slides.length - 1 ? current + 1 : 0;
+  prev = current > 0 ? current - 1 : slides.length - 1;
+  update();
+}
 
-// -- decide how to call prev/next
-// -- update variables
-// --- [current] = newIndex
-// --- [next] current + 1 : 0
-// --- [prev] current - 1 : length - 1
-// -- update the CSS
+const goToNext = () => current < slides.length - 1 ? goToNum(current + 1) : goToNum(0);
+const goToPrev = () => current > 0 ? goToNum(current - 1) : goToNum(slides.length - 1);
+
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', () => i === 0 ? goToPrev() : goToNext());
+}
+
+update();

@@ -453,7 +453,7 @@ size that was previously set on the original card-popup-box class. */
 }
 
 .modal-body .img-wrapper img {
-  width: 200px;
+  width: 100%;
   border-radius: 8px;
   object-fit: cover;
   height: 200px;
